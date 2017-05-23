@@ -22,6 +22,7 @@ router.delete('/api/customer/:id', customerController.deleteById)
 router.post('/api/transactions', transactionController.insertOne)
 router.get('/api/transactions', transactionController.getAll)
 router.get('/api/transaction/:id', transactionController.getById)
+router.put('/api/transactions/booklist/:id', transactionController.insertBooklist)
 router.put('/api/transaction/:id', transactionController.updateById)
 router.delete('/api/transaction/:id', transactionController.deleteById)
 

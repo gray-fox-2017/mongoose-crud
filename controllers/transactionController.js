@@ -1,5 +1,6 @@
 const Transaction = require('../models/transaction')
 let methods = {}
+const ObjectId = require('mongodb').ObjectID;
 
 methods.insertOne = (req, res) => {
   console.log('Success');
@@ -7,13 +8,40 @@ methods.insertOne = (req, res) => {
     memberid: req.body.memberid,
     days: req.body.days,
     fine: req.body.fine,
-    booklist: req.body.booklist
+    booklist: []
   })
 
   newTransaction.save((err, record) => {
     if (err) res.send(err)
     console.log('InsertOne transaction success');
     res.send(record)
+  })
+}
+
+methods.insertBooklist = (req, res) => {
+  Transaction.findById(req.params.id, (err, record) => {
+    if (err) res.send(err)
+    console.log('GetById transaction success');
+    let temp = record.booklist+','+req.body.booklist
+    let splitdata = temp.split(',')
+    console.log('--------');
+    console.log(splitdata);
+    // console.log(record.days);
+    let pushData = []
+    Transaction.updateOne({
+      "_id": record._id
+    }, {
+      $set: {
+        "memberid": req.body.memberid || record.memberid,
+        "days": req.body.days || record.days,
+        "fine": req.body.fine || record.fine,
+        "booklist": record.booklist.length < 1 ? req.body.booklist : splitdata || record.booklist
+      }
+    }, (err, response) => {
+      if (err) res.send(err)
+      console.log('UpdateById transaction success');
+      res.send(record)
+    })
   })
 }
 
