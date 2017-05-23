@@ -5,7 +5,7 @@ var Book = require('../models/book')
 
 var insertBook = function(req, res) {
   Book.create(req.body, (err, book) => {
-    if(err) res.send(err)
+    if(err) res.send(err.errors)
     res.send(book)
   })
 }
@@ -23,8 +23,8 @@ var findOne = function(req, res) {
 }
 
 var updateBook = function(req, res) {
-  Book.findByIdAndUpdate(req.params.id, { $set: req.body }, (err, book) => {
-    if(err) res.send(err)
+  Book.findByIdAndUpdate(req.params.id, { $set: req.body }, { runValidators: true }, (err, book) => {
+    if(err) res.send(err.errors)
     res.send(book)
   })
 }
