@@ -32,14 +32,11 @@ methods.insertBooklist = (req, res) => {
       "_id": record._id
     }, {
       $set: {
-        "memberid": req.body.memberid || record.memberid,
-        "days": req.body.days || record.days,
-        "fine": req.body.fine || record.fine,
         "booklist": record.booklist.length < 1 ? req.body.booklist : splitdata || record.booklist
       }
     }, (err, response) => {
       if (err) res.send(err)
-      console.log('UpdateById transaction success');
+      console.log('insertBooklist transaction success');
       res.send(record)
     })
   })
