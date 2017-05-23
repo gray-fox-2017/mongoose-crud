@@ -33,25 +33,15 @@ var getOneTransaction = function(req, res) {
 }
 
 var updateTransaction = function(req, res) {
-  // let input = req.body;
-  // input.in_date = new Date();
-  //
-  // if(input.in_date > input.due_date) {
-  //   let late = Math.ceil( (input.in_date - input.due_date) / (1000 * 3600 * 24) )
-  //   input.fine = late * 500;
-  // } else {
-  //   input.fine = 0;
-  // }
-  //
-  // Transaction.findByIdAndUpdate(req.params.id, { $set: input }, (err, trans) => {
-  //   if(err) res.send(err)
-  //   res.send(trans)
-  // })
   Transaction.findById(req.params.id, (err, trans) => {
     if(err) {
       res.send(err)
     } else {
       trans.in_date = new Date()
+
+      trans.memberid = req.body.memberid || trans.memberid
+      trans.days = req.body.days || trans.days
+      trans.booklist = req.body.booklist || trans.booklist
 
       if(trans.in_date > trans.due_date) {
         let days = Math.round((trans.in_date - trans.due_date)/(1000*24*3600))
