@@ -51,9 +51,28 @@ var updateTransaction = (req, res) => {
   Transaction.findOne({_id: id})
   .then((transaction)=>{
     let input = req.body
-    let dueDate = transaction.out_date
-    dueDate.setDate(dueDate.getDate() + parseInt(input.days))
-    input.due_date = dueDate
+
+    if(input.hasOwnProperty('days')){
+      let dueDate = transaction.out_date
+      dueDate.setDate(dueDate.getDate() + parseInt(input.days))
+      input.due_date = dueDate
+    }
+
+    if(input.hasOwnProperty('in_date')){
+      let dueDate = new Date(transaction.due_date)
+      let dateIn = new Date(input.in_date)
+      let timeDiff = Math.abs(dateIn.getTime() - dueDate.getTime())
+      let diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24))
+
+      if(dateIn.getTime() > dueDate.getTime() && diffDays !== 0){
+        let sumBooks = transaction.booklist.length
+        let fine = sumBooks*diffDays*500
+        input.fine = fine
+      }
+
+      // console.log(diffDays);
+    }
+
 
     Transaction.update({_id: id}, input)
     .then(()=>{
