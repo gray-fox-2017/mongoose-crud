@@ -3,14 +3,14 @@ var router = express.Router();
 
 var transactionController = require('../controllers/transactionController')
 
-router.get('/', transactionController.findBooks)
+router.get('/', transactionController.getTransactions)
 
-router.post('/', transactionController.insertBook)
+router.post('/', transactionController.createTransaction)
 
-router.get('/:id', transactionController.findOne)
-//
-router.put('/:id', transactionController.updateBook)
-//
-router.delete('/:id', transactionController.deleteBook)
+router.get('/:id', transactionController.getOneTransaction)
+
+router.put('/:id', transactionController.updateTransaction)
+
+router.delete('/:id', transactionController.deleteTransaction)
 
 module.exports = router;

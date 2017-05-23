@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
+Schema = mongoose.Schema;
 
 var transactionSchema = mongoose.Schema({
-    memberid: { type: String, ref: 'Customer' },
+    memberid: String,
     days: String,
     out_date: { type: Date, default: Date.now },
     due_date: Date,
