@@ -3,6 +3,9 @@ const app = express()
 const bodyParser = require('body-parser')
 const index = require('./routes/index')
 const logger = require('morgan')
+const mongoose = require('mongoose')
+
+mongoose.connect('mongodb://localhost/selasamongoosecrud');
 
 // NOTE: set
 app.set('port', process.env.PORT || 3000)
