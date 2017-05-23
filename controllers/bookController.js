@@ -57,4 +57,18 @@ methods.updateById = (req, res) => {
   })
 }
 
+methods.deleteById = (req, res) => {
+  Book.findById(req.params.id, (err, record) => {
+    if (err) res.send(err)
+    console.log('GetById book success');
+    Book.deleteOne({
+      "_id": record._id
+    }, (err, response) => {
+      if (err) res.send(err)
+      console.log('DeleteById book success');
+      res.send(record)
+    })
+  })
+}
+
 module.exports = methods
