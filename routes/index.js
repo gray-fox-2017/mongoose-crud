@@ -23,7 +23,7 @@ router.put('/api/customers/:_id', customerController.edit)
 //routes for transactions
 router.post('/api/transactions', transactionsController.add)
 router.get('/api/transactions', transactionsController.getAll)
-router.get('/api/transactions:_id', transactionsController.getById)
+router.get('/api/transactions/:_id', transactionsController.getById)
 router.delete('/api/transactions/:_id', transactionsController.remove)
 router.put('/api/transactions/:_id', transactionsController.edit)
 
