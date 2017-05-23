@@ -4,9 +4,9 @@ var bookController = require('../controllers/books-controller')
 
 router.get('/', bookController.findAll);
 
-// // create new book
-// router.post('/', bookController.newBook)
-//
+// create new book
+router.post('/', bookController.newBook)
+
 // // delete book
 // router.delete('/:id', bookController.deleteBook)
 //
