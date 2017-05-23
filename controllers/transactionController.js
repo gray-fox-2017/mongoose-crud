@@ -22,21 +22,8 @@ methods.insertBooklist = (req, res) => {
   Transaction.findById(req.params.id, (err, record) => {
     if (err) res.send(err)
     console.log('GetById transaction success');
-    let temp = record.booklist+','+req.body.booklist
-    let splitdata = temp.split(',')
-    console.log('--------');
-    console.log(splitdata);
-    // console.log(record.days);
-    let pushData = []
-    Transaction.updateOne({
-      "_id": record._id
-    }, {
-      $set: {
-        "booklist": record.booklist.length < 1 ? req.body.booklist : splitdata || record.booklist
-      }
-    }, (err, response) => {
-      if (err) res.send(err)
-      console.log('insertBooklist transaction success');
+    record.booklist.push(req.body.booklist)
+    record.save(err => {
       res.send(record)
     })
   })
