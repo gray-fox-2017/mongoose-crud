@@ -18,7 +18,7 @@ function add (req,res,next){
     memberid: req.body.memberid,
     days: +req.body.days,
     out_date: new Date(),
-    due_date: new Date(req.body.due_date),
+    due_date: new Date(Number(new Date()) + Number(new Date(req.body.days * 1000 * 60 * 60 * 24))),
     in_date: new Date(),
     fine: 0,
     booklist: req.body.booklist
@@ -89,7 +89,12 @@ function update (req,res,next){
     var gap = now - result.due_date
     var days = gap / 1000 / 60 / 60 / 24 
     var totalfine = Math.floor(days) * 1000
-    result.fine = totalfine
+    if(totalfine > 0){
+      result.fine = totalfine
+    }
+    else{
+      result.fine = 0
+    }  
     result.in_date = new Date()
     result.save(function(err){
       if(err){
