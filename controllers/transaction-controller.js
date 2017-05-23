@@ -11,7 +11,13 @@ var findAll = (req, res) => {
 }
 
 var newTransaction = (req, res) => {
-  Transaction.create(req.body)
+  let input = req.body
+  input.out_date = new Date()
+
+  let dueDate = new Date()
+  dueDate.setDate(dueDate.getDate() + parseInt(input.days))
+  input.due_date = dueDate
+  Transaction.create(input)
   .then(()=>{
     res.send('New Transaction has been added')
   })
@@ -41,9 +47,19 @@ var getOneTransaction = (req, res) => {
 
 var updateTransaction = (req, res) => {
   let id = req.params.id
-  Transaction.update({_id: id}, req.body)
-  .then(()=>{
-    res.send('transaction has been updated')
+
+  Transaction.findOne({_id: id})
+  .then((transaction)=>{
+    let input = req.body
+    let dueDate = transaction.out_date
+    dueDate.setDate(dueDate.getDate() + parseInt(input.days))
+    input.due_date = dueDate
+
+    Transaction.update({_id: id}, input)
+    .then(()=>{
+      res.send('transaction has been updated')
+    })
+    .catch((err)=>{res.send(err)})
   })
   .catch((err)=>{res.send(err)})
 }
