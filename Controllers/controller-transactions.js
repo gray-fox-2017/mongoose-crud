@@ -1,14 +1,36 @@
 const Transactions = require('../Models/transactions.js')
 const ObjectId = require('mongodb').ObjectID;
+const Books = require('../Models/books')
 
 function add (req,res,next){
+  Books.findOne({
+    "_id": req.body.booklist
+  },function(err,result){
+    let stock = result.stock
+    if(stock === 0){
+      res.send('Stock Buku Kosong Bro')
+    }
+    else{
+      result.stock = stock -1
+      result.save()
+      
   Transactions.create({
     memberid: req.body.memberid,
-    days: req.body.days,
-    fine: req.body.fine,
-    booklist: req.body.booklist.split(',')
-  },function(err,result){
-    res.send(`Booklist with Member ID:${req.body.memberid} Created!`)
+    days: +req.body.days,
+    out_date: new Date(),
+    due_date: new Date(req.body.due_date),
+    in_date: new Date(),
+    fine: 0,
+    booklist: req.body.booklist
+  },function(err,data){
+    if(err){
+      console.log(err);
+    }
+    else{
+      res.send(`Transaction Created!`)
+        }  
+      })
+    }       
   })
 }
 
@@ -61,17 +83,22 @@ function addToCart (req,res,next){
   })
 }
 
-function update (req,res,next){
+function update (req,res,next){  
   Transactions.findById(req.params.id,function (err,result){
-    res.send(`Update Success`)
-    Transactions.updateOne({
-      $set:{
-        memberid: req.body.memberid || result.memberid,
-        days: req.body.days || result.days,
-        fine: req.body.fine || result.fine,
-        booklist: req.body.booklist || result.booklist
+    var now = new Date()
+    var gap = now - result.due_date
+    var days = gap / 1000 / 60 / 60 / 24 
+    var totalfine = Math.floor(days) * 1000
+    result.fine = totalfine
+    result.in_date = new Date()
+    result.save(function(err){
+      if(err){
+        console.log(err);
       }
-    })
+      else{
+        res.send(result)
+      }    
+    }) 
   })
 }
 

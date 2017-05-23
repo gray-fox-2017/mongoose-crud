@@ -4,18 +4,9 @@ const Schema = mongoose.Schema
 var TransactionSchema = new Schema({
   "memberid": String,
   "days" : Number,
-  "out_date": {
-    type: String,
-    default:new Date().toISOString()
-  },
-  "due_date": {
-    type: String,
-    default:new Date().toISOString()
-  },
-  "in_date":{
-    type: String,
-    default:new Date().toISOString()
-  },
+  "out_date": Date,
+  "due_date": Date,
+  "in_date": Date,
   "fine": Number,
   "booklist": [{type: Schema.Types.ObjectId, ref: 'Book'}]
 })
