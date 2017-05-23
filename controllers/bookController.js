@@ -28,12 +28,32 @@ methods.getAll = (req, res) => {
 }
 
 methods.getById = (req, res) => {
-  Book.findById({
-    "_id": ObjectId(req.params.id)
-  }, (err, record) => {
+  Book.findById(req.params.id, (err, record) => {
     if (err) res.send(err)
     console.log('GetById book success');
     res.send(record)
+  })
+}
+
+methods.updateById = (req, res) => {
+  Book.findById(req.params.id, (err, record) => {
+    if (err) res.send(err)
+    console.log('GetById book success');
+    Book.updateOne({
+      "_id": record._id
+    }, {
+      $set: {
+        "isbn": req.body.isbn || record.isbn,
+        "title": req.body.title || record.title,
+        "author": req.body.author || record.author,
+        "category": req.body.category || record.category,
+        "stock": req.body.stock || record.stock
+      }
+    }, (err, response) => {
+      if (err) res.send(err)
+      console.log('UpdateById book success');
+      res.send(record)
+    })
   })
 }
 
