@@ -24,7 +24,7 @@ function getSingle(req, res) {
   });
 }
 
-function createBook(req, res) {
+function createCustomer(req, res) {
   Customers.create({
     name: req.body.name,
     memberid: req.body.memberid,
@@ -41,7 +41,7 @@ function createBook(req, res) {
   });
 }
 
-function deleteBook(req, res) {
+function deleteCustomer(req, res) {
   Customers.remove({
     '_id': req.params.id
   }, function(err, result) {
@@ -54,7 +54,7 @@ function deleteBook(req, res) {
   });
 }
 
-function updateBook(req, res) {
+function updateCustomer(req, res) {
   Customers.find({
     _id: req.params.id
   }, function(err, result) {
@@ -76,5 +76,5 @@ function updateBook(req, res) {
 }
 
 module.exports = {
-  getAll, getSingle, createBook, deleteBook, updateBook
+  getAll, getSingle, createCustomer, deleteCustomer, updateCustomer
 }

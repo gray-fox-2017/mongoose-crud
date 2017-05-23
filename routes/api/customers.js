@@ -4,8 +4,8 @@ const customersController = require('../../controllers/customers_controller');
 
 router.get('/', customersController.getAll);
 router.get('/:id', customersController.getSingle);
-router.post('/', customersController.createBook);
-router.delete('/:id', customersController.deleteBook);
-router.put('/:id', customersController.updateBook);
+router.post('/', customersController.createCustomer);
+router.delete('/:id', customersController.deleteCustomer);
+router.put('/:id', customersController.updateCustomer);
 
 module.exports = router;
