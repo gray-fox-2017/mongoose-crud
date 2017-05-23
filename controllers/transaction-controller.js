@@ -1,6 +1,4 @@
 'use strict'
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/library');
 var Transaction = require('../models/transactions')
 
 var findAll = (req, res) => {
@@ -33,10 +31,12 @@ var getOneTransaction = (req, res) => {
   let id = req.params.id
   Transaction.find({_id: id})
   .populate('booklist')
-  .then((transaction)=>{
+  .then((err, transaction)=>{
+    if (err) {
+      res.send(err)
+    }
     res.send(transaction)
   })
-  .catch((err)=>{res.send(err)})
 }
 
 var updateTransaction = (req, res) => {

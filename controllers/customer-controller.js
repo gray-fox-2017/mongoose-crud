@@ -1,6 +1,4 @@
 'use strict'
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/library');
 var Customer = require('../models/customers')
 
 var findAll = (req, res) => {
