@@ -1,0 +1,30 @@
+{
+  "name": "mongoose-crud",
+  "version": "1.0.0",
+  "description": "basic mongo crud operation using mongoose ODM",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hakiemaul/mongoose-crud.git"
+  },
+  "keywords": [
+    "mongo",
+    "mongoose",
+    "express"
+  ],
+  "author": "hakiemaul",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hakiemaul/mongoose-crud/issues"
+  },
+  "homepage": "https://github.com/hakiemaul/mongoose-crud#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongodb": "^2.2.27",
+    "mongoose": "^4.10.2"
+  }
+}
