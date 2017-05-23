@@ -1,6 +1,3 @@
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/library');
-
 var Customer = require('../models/customer')
 
 var createCustomer = function(req, res) {

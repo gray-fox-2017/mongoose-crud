@@ -1,6 +1,3 @@
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/library');
-
 var Transaction = require('../models/transaction')
 
 var getTransactions = function(req, res) {
@@ -13,7 +10,14 @@ var getTransactions = function(req, res) {
 }
 
 var createTransaction = function(req, res) {
-  Transaction.create(req.body, function(err, trans) {
+  let input = req.body;
+  input.out_date = new Date();
+
+  var due = new Date()
+  due.setDate(due.getDate() + parseInt(input.days));
+  input.due_date = due;
+
+  Transaction.create(input, function(err, trans) {
     if(err) res.send(err)
     res.send(trans)
   })
@@ -29,9 +33,39 @@ var getOneTransaction = function(req, res) {
 }
 
 var updateTransaction = function(req, res) {
-  Transaction.findByIdAndUpdate(req.params.id, { $set: req.body }, (err, trans) => {
-    if(err) res.send(err)
-    res.send(trans)
+  // let input = req.body;
+  // input.in_date = new Date();
+  //
+  // if(input.in_date > input.due_date) {
+  //   let late = Math.ceil( (input.in_date - input.due_date) / (1000 * 3600 * 24) )
+  //   input.fine = late * 500;
+  // } else {
+  //   input.fine = 0;
+  // }
+  //
+  // Transaction.findByIdAndUpdate(req.params.id, { $set: input }, (err, trans) => {
+  //   if(err) res.send(err)
+  //   res.send(trans)
+  // })
+  Transaction.findById(req.params.id, (err, trans) => {
+    if(err) {
+      res.send(err)
+    } else {
+      trans.in_date = new Date()
+
+      if(trans.in_date > trans.due_date) {
+        let days = Math.round((trans.in_date - trans.due_date)/(1000*24*3600))
+        let books = trans.booklist.length
+        trans.fine = 500 * books * days;
+      } else {
+        trans.fine = 0;
+      }
+
+      trans.save( (err, trans) => {
+        if(err) res.send(err)
+        res.send(trans)
+      })
+    }
   })
 }
 

@@ -1,5 +1,9 @@
 var express = require('express')
 var app = express()
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/library');
+// mongoose.Promise = global.Promise;
+
 var bodyParser = require('body-parser');
 
 var books = require('./routes/books')
