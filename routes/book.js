@@ -7,8 +7,10 @@ router.get('/',bookControllers.getAll)
 
 //Add a book
 router.post('/', bookControllers.addBook)
+
 //Delete a book
 router.delete('/:id',bookControllers.deleteBook)
+
 //Update a book
 router.patch('/:id', bookControllers.updateBook)
 

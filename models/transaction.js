@@ -6,10 +6,8 @@ const transactionSchema = new mongoose.Schema({
   due_date : Date,
   in_date : Date,
   fine : Number,
-  booklist : Array
+  booklist : [{type : mongoose.Schema.ObjectId, ref : 'Book'}]
 })
-const Customer = mongoose.model('Transaction',transactionSchema)
+const Transaction = mongoose.model('Transaction',transactionSchema)
 
-module.exports = {
-  Customer
-};
+module.exports = Transaction;
