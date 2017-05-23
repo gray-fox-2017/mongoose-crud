@@ -12,5 +12,9 @@ router.delete('/api/book/:id', bookController.deleteById)
 
 // NOTE: Customer
 router.post('/api/customers', customerController.insertOne)
+router.get('/api/customers', customerController.getAll)
+router.get('/api/customer/:id', customerController.getById)
+router.put('/api/customer/:id', customerController.updateById)
+router.delete('/api/customer/:id', customerController.deleteById)
 
 module.exports = router
