@@ -27,4 +27,14 @@ methods.getAll = (req, res) => {
   })
 }
 
+methods.getById = (req, res) => {
+  Book.findById({
+    "_id": ObjectId(req.params.id)
+  }, (err, record) => {
+    if (err) res.send(err)
+    console.log('GetById book success');
+    res.send(record)
+  })
+}
+
 module.exports = methods
