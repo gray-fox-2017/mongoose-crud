@@ -1,10 +1,9 @@
 const Transactions = require('../models/transactions_model');
 
 function getAll(req, res) {
-  Transactions.find({}, function(err, result) {
-    if (err) {
-      res.send(err.message);
-    }
+  Transactions.find().populate('booklist')
+  .exec(function(err, result) {
+    if (err) res.send(err.message);
     console.log("Found the following records:");
     console.log(result);
     res.send(result);
@@ -12,12 +11,9 @@ function getAll(req, res) {
 }
 
 function getSingle(req, res) {
-  Transactions.find({
-    '_id': req.params.id
-  }, function(err, result) {
-    if (err) {
-      res.send(err.message);
-    }
+  Transactions.findById({'_id': req.params.id}).populate('booklist')
+  .exec(function(err, result) {
+    if (err) res.send(err.message);
     console.log("Found the following record:");
     console.log(result);
     res.send(result);
