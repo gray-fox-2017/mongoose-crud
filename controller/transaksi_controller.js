@@ -55,26 +55,31 @@ var deleteTransakti = (req, res, next)=>{
 
 
 var updateTransaksi = (req, res, next)=>{
-  Transaktion.findById(req.params.id, (err, query) => {
-   if (err) res.send(err)
-   Transaktion.updateOne({
-      _id: query._id
-   }, {
-      $set: {
-        memberid : req.body.name,
-        days : req.body.memberid,
-        out_date : new Date(),
-        due_date : new Date(),
-        in_date : new Date(),
-        fine : req.body.fine,
-        booklist : req.body.booklist,
-        createdAt : query.createdAt,
-        updateAt : new Date().toISOString()
-      }
-}, (err, documents) => {
-      if (err) res.send(err)
-      res.send(documents)
-   })
+  Transaktion.findById(req.params.id, (err, record) => {
+
+   if (err) {
+        res.send(err)
+   } else {
+        Transaktion.update({
+           _id: query._id
+        }, {
+           $set: {
+             memberid : req.body.name || record.memberid,
+             days : req.body.memberid || record.days,
+             out_date : new Date() || record.out_date,
+             due_date : new Date() || record.due_date,
+             in_date : new Date() || record.in_date,
+             fine : req.body.fine || record.fine,
+             booklist : req.body.booklist || record.booklist,
+             createdAt : record.createdAt,
+             updateAt : new Date().toISOString()
+           }
+     }, (err, documents) => {
+           if (err) res.send(err)
+           res.send(documents)
+        })
+   }
+
   })
 }
 
@@ -100,6 +105,7 @@ var addBooklist = (req, res, next)=>{
    }
   })
 }
+
 
 module.exports = {
      getAllTransaksi,
