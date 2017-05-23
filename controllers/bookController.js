@@ -19,4 +19,12 @@ methods.insertOne = (req, res) => {
   })
 }
 
+methods.getAll = (req, res) => {
+  Book.find({}, (err, records) => {
+    if (err) res.send(err)
+    console.log('GetAll books success');
+    res.send(records)
+  })
+}
+
 module.exports = methods
