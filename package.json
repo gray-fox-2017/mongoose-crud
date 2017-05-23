@@ -1,0 +1,30 @@
+{
+  "name": "mongoose-crud",
+  "version": "1.0.0",
+  "description": "Library Database with Mongoose",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raynormw/mongoose-crud.git"
+  },
+  "keywords": [
+    "database",
+    "mongoose",
+    "hacktiv8"
+  ],
+  "author": "raynormw",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/raynormw/mongoose-crud/issues"
+  },
+  "homepage": "https://github.com/raynormw/mongoose-crud#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongodb": "^2.2.27",
+    "mongoose": "^4.10.2"
+  }
+}
