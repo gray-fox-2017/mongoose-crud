@@ -37,10 +37,19 @@ var getOneBook = (req, res) => {
   .catch((err)=>{res.send(err)})
 }
 
+var updateBook = (req, res) => {
+  let id = req.params.id
+  Book.update({_id: id}, req.body)
+  .then(()=>{
+    res.send('book has been updated')
+  })
+  .catch((err)=>{res.send(err)})
+}
+
 module.exports = {
   findAll,
   newBook,
   deleteBook,
-  getOneBook
-  // updateBook
+  getOneBook,
+  updateBook
 }

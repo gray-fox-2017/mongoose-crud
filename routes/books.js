@@ -10,9 +10,9 @@ router.post('/', bookController.newBook)
 // delete book
 router.delete('/:id', bookController.deleteBook)
 
-// // update book
-// router.put('/:id', bookController.updateBook)
-//
+// update book
+router.put('/:id', bookController.updateBook)
+
 // get book by id
 router.get('/:id', bookController.getOneBook)
 
