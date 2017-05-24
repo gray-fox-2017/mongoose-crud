@@ -9,7 +9,9 @@ router.get('/',transactionControllers.getAll)
 router.post('/',transactionControllers.createTransaction)
 
 //Delete a transaction
+router.delete('/:id',transactionControllers.deleteTransaction)
 
 //Edit a transaction
+router.patch('/:id', transactionControllers.updateTransaction)
 
 module.exports = router;

@@ -35,7 +35,45 @@ const createTransaction = function(req,res) {
   })
 }
 
+const deleteTransaction = function(req,res) {
+  transactionModel.deleteOne({
+    _id : ObjectId(req.params.id)
+  },function(err,result) {
+    if (err) {
+      res.send(err)
+    } else {
+      res.send(`Delete id ${req.params.id} success`)
+    }
+  })
+}
+
+const updateTransaction = function(req,res) {
+  transactionModel.findOne({
+    _id : ObjectId(req.params.id)
+  },function(err,result) {
+    if (err) {
+      res.send(err)
+    } else {
+      result.memberid = req.body.memberid || result.memberid
+      result.days = req.body.days || result.days
+      result.out_date = req.body.out_date || result.out_date
+      result.due_date = req.body.due_date || result.due_date
+      result.in_date = req.body.in_date || result.in_date
+      result.fine = req.body.fine || result.fine
+      result.booklist = req.body.booklist.split(",") || result.booklist
+      result.save(function(err,raw) {
+        if (err) {
+          res.send(err)
+        } else {
+          res.send(raw)
+        }
+      })
+    }
+  })
+}
+
 module.exports = {
   createTransaction,
-  getAll
+  getAll,
+  deleteTransaction
 };
