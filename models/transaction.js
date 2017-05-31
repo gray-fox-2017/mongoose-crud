@@ -4,25 +4,23 @@ var Schema = mongoose.Schema
 
 
 var transactionSchema = new Schema({
-  memberid : String,
-  days: Number,
-  out_date:{
+  id_pembeli : {
+    type : Schema.Types.ObjectId,
+    ref:'Customer',
+    required:true
+  },
+  tanggal_pembelian:{
     type:Date,
     default: Date.now
   },
-  due_date:{
-    type:Date,
-    default: Date.now
+  total_harga:{
+    type:String,
+    required:true
   },
-  in_date:{
-    type:Date,
-    default: Date.now
-  },
-  fine:Number,
-  booklist:[{
+  keranjang:[{
     type : Schema.Types.ObjectId,
     ref:'Book'
-  }],
+  }]
 })
 
 var Transaction = mongoose.model('Transaction', transactionSchema)

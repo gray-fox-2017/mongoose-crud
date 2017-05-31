@@ -5,6 +5,8 @@ var bookSchema = new Schema({
   isbn:String,
   title:String,
   author:String,
+  photo:String,
+  price:String,
   category:String,
   stock:Number
 })

@@ -1,11 +1,14 @@
 const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
+const cors = require('cors')
 var bodyParser = require('body-parser')
 
 var books = require('./routes/books')
 var customers = require('./routes/customers')
 var transactions = require('./routes/transactions')
+
+
 
 mongoose.connect('mongodb://localhost/27017/library_mongoose', (err)=>{
   if(!err){
@@ -15,6 +18,7 @@ mongoose.connect('mongodb://localhost/27017/library_mongoose', (err)=>{
   }
 })
 
+app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
 

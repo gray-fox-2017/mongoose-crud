@@ -4,7 +4,7 @@ const methods = {}
 //SHOW ALL TRANSACTION
 methods.getAllTransactions = function(req,res){
   Transaction.find()
-             .populate('booklist')
+             .populate('keranjang id_pembeli', 'name title price')
              .exec(function(err,Transaction){
               if(err){
                 console.log(err);
@@ -17,11 +17,16 @@ methods.getAllTransactions = function(req,res){
 
 //INSERT TRANSACTION
 methods.insertTransaction = function(req,res){
+  let tmp = []
+  req.body.value.forEach(function(data){
+    for(let i=0; i<data.jumlah; i++){
+      tmp.push(data._id)
+    }
+  })
   var input = new Transaction({
-    memberid:req.body.memberid,
-    days:req.body.days,
-    fine:req.body.fine,
-    booklist:req.body.booklist
+    id_pembeli:'5923ee75ae8efe3170ea52ea',
+    total_harga:req.body.totalharga,
+    keranjang:tmp
   })
   input.save(function(err, input){
     if(err){
