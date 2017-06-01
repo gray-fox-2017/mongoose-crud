@@ -1,14 +1,17 @@
 const Transaction = require('../models/transaction')
 let methods = {}
 const ObjectId = require('mongodb').ObjectID;
+let helpersConvDate = require('../helpers/conver_date')
 
 methods.insertOne = (req, res) => {
   console.log('Success');
+  let outDate = new Date()
   let newTransaction = new Transaction({
     memberid: req.body.memberid,
     days: req.body.days,
-    fine: req.body.fine,
-    booklist: []
+    out_date: outDate,
+    due_date: helpersConvDate.dueDate(req.body.days),
+    booklist: req.body.booklist
   })
 
   newTransaction.save((err, record) => {
@@ -34,8 +37,19 @@ methods.getAll = (req, res) => {
   .populate('booklist')
   .exec((err, records) => {
     if (err) res.send(err)
-    console.log('GetAll transactions success');
-    res.send(records)
+    else {
+      // console.log('GetAll transactions success');
+      // let finePerDay = 1000
+      // let lihatselisih = records.forEach(record => {
+      //   let dueDate = record.due_date
+      //   return dueDate
+      //   // let outDate = record.out_date
+      //   // let selisih = dueDate.getDate() - outDate.getDate()
+      //   // return selisih
+      // })
+      // console.log(lihatselisih);
+      res.send(records)
+    }
   })
 }
 
@@ -53,20 +67,31 @@ methods.updateById = (req, res) => {
   Transaction.findById(req.params.id, (err, record) => {
     if (err) res.send(err)
     console.log('GetById transaction success');
-    Transaction.updateOne({
-      "_id": record._id
-    }, {
-      $set: {
-        "memberid": req.body.memberid || record.memberid,
-        "days": req.body.days || record.days,
-        "fine": req.body.fine || record.fine,
-        "booklist": req.body.booklist || record.booklist
-      }
-    }, (err, response) => {
-      if (err) res.send(err)
-      console.log('UpdateById transaction success');
-      res.send(record)
-    })
+    let inDate = new Date()
+    record.fine = helpersConvDate.countFine(record.due_date)
+    // console.log('+++++++');
+    // console.log(helpersConvDate.countFine(record.due_date));
+    record.save()
+    res.send(record)
+    // Transaction.updateOne({
+    //   "_id": record._id
+    // }, {
+    //   $set: {
+    //     "memberid" : record.memberid,
+    //     "days" : record.days,
+    //     "out_date" : record.out_date,
+    //     "due_date" : record.due_date,
+    //     "booklist" : record.booklist,
+    //     "in_date": inDate,
+    //     "fine": helpersConvDate.countFine(record.due_date)
+    //   }
+    // }, (err, response) => {
+    //   if (err) res.send(err)
+    //   else {
+    //     console.log('UpdateById transaction success');
+    //     res.send(record)
+    //   }
+    // })
   })
 }
 

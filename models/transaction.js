@@ -10,21 +10,16 @@ let transactionSchema = new Schema({
         type: Number,
         required: true
     },
-    out_date: {
-        type: String,
-        default: new Date().toISOString()
-    },
-    due_date: {
-        type: String,
-        default: new Date().toISOString()
-    },
+    out_date: Date,
+    due_date: Date,
     in_date: {
-        type: String,
-        default: new Date().toISOString()
+        type: Date,
+        default: new Date()
     },
     fine: {
         type: Number,
-        required: true
+        required: true,
+        default: 0
     },
     booklist: [{
         type: Schema.Types.ObjectId,
