@@ -24,6 +24,7 @@ var InsertCustomer = (req,res,next) =>{
      var insert = new Customer ({
           name: req.body.name,
           memberid:   req.body.memberid,
+          email : req.body.email,
           address: req.body.address,
           zipcode: req.body.zipcode,
           phone: req.body.phone
@@ -58,6 +59,7 @@ var updateCustomer = (req, res)=>{
       $set: {
       name: req.body.name || data.name,
       memberid:   req.body.memberid || data.memberid,
+      email : req.body.email || data.email,
       address: req.body.address || data.address,
       zipcode: req.body.zipcode || data.zipcode,
       phone: req.body.phone || data.phone,

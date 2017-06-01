@@ -1,8 +1,8 @@
-var Transaktion= require('../models/transaktions_models')
+var Transaktion= require('../models/carts_models')
 
-var getAllTransaksi = (req, res, next)=>{
+var getAllCart = (req, res, next)=>{
   Transaktion.find({})
-  .populate('booklist')
+  .populate('list_item')
   .exec((err, documents)=>{
    if(err){
       res.send(err)
@@ -12,9 +12,9 @@ var getAllTransaksi = (req, res, next)=>{
   })
 }
 
-var getOneTransaksi = (req, res)=>{
+var getOneCart = (req, res)=>{
  Transaktion.findOne({_id : req.params.id})
- .populate('booklist')
+ .populate('list_item')
  .exec((err, result)=>{
     if(err){
       res.send(err)
@@ -24,15 +24,11 @@ var getOneTransaksi = (req, res)=>{
  })
 }
 
-var insertTransaksi = (req, res, next)=>{
+var insertCart = (req, res, next)=>{
  var insertTransaksi = new Transaktion({
-    memberid : req.body.memberid,
-    days : req.body.days,
-    out_date : new Date(),
-    due_date : new Date(),
-    in_date : new Date(),
-    fine : req.body.fine,
-    booklist : req.body.booklist
+    invoice : req.body.invoice,
+    customer_id : req.body.customer_id,
+    list_item : req.body.list_item
  })
  insertTransaksi.save((err, documents)=>{
     if(err){
@@ -43,7 +39,7 @@ var insertTransaksi = (req, res, next)=>{
  })
 }
 
-var deleteTransakti = (req, res, next)=>{
+var deleteCart = (req, res, next)=>{
   Transaktion.remove({_id : req.params.id}, (err, documents)=>{
    if(err){
       res.send(err)
@@ -54,7 +50,7 @@ var deleteTransakti = (req, res, next)=>{
 }
 
 
-var updateTransaksi = (req, res, next)=>{
+var updateCart = (req, res, next)=>{
   Transaktion.findById(req.params.id, (err, record) => {
 
    if (err) {
@@ -64,15 +60,9 @@ var updateTransaksi = (req, res, next)=>{
            _id: query._id
         }, {
            $set: {
-             memberid : req.body.name || record.memberid,
-             days : req.body.memberid || record.days,
-             out_date : new Date() || record.out_date,
-             due_date : new Date() || record.due_date,
-             in_date : new Date() || record.in_date,
-             fine : req.body.fine || record.fine,
-             booklist : req.body.booklist || record.booklist,
-             createdAt : record.createdAt,
-             updateAt : new Date().toISOString()
+                invoice : req.body.invoice || record.invoice,
+                customer_id : req.body.customer_id || record.customer_id,
+                list_item : req.body.list_item || record.list_item
            }
      }, (err, documents) => {
            if (err) res.send(err)
@@ -90,13 +80,13 @@ var addBooklist = (req, res, next)=>{
       res.send(err)
    }
    else{
-      var list = data.booklist
-      list.push(req.body.booklist)
+      var list = data.list_item
+      list.push(req.body.list_item)
       Transaktion.updateOne({
         _id: data._id
       }, {
         $set: {
-          booklist : list
+          list_item : list
         }
    }, (err, documents) => {
         if (err) res.send(err)
@@ -108,10 +98,10 @@ var addBooklist = (req, res, next)=>{
 
 
 module.exports = {
-     getAllTransaksi,
-     getOneTransaksi,
-     insertTransaksi,
-     deleteTransakti,
-     updateTransaksi,
+     getAllCart,
+     getOneCart,
+     insertCart,
+     deleteCart,
+     updateCart,
      addBooklist
 }
