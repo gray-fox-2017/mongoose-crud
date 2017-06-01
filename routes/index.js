@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var bookController = require('../controllers/books_controller.js')
+var itemController = require('../controllers/items_controller.js')
 var customerController = require('../controllers/customer_controller.js')
 var transactionsController = require('../controllers/transactions_controller.js')
 
@@ -9,10 +9,10 @@ router.get('/', function(req, res, next) {
   res.send({ title: 'Express With Mongoose' });
 });
 //routes for books
-router.post('/api/books', bookController.create)
-router.get('/api/books', bookController.getAll)
-router.delete('/api/books/:_id', bookController.remove)
-router.put('/api/books/:_id', bookController.edit)
+router.post('/api/items', itemController.create)
+router.get('/api/items', itemController.getAll)
+router.delete('/api/items/:_id', itemController.remove)
+router.put('/api/items/:_id', itemController.edit)
 
 //routes for customer
 router.post('/api/customers', customerController.create)

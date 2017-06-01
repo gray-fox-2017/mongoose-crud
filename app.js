@@ -2,7 +2,9 @@ var express = require('express');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/crud_mongodb');
+var cors = require('cors')
+
+mongoose.connect('mongodb://localhost/server-mongodb');
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -15,6 +17,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
+app.use(cors())
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
