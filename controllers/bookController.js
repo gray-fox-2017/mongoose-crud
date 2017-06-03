@@ -64,5 +64,16 @@ methods.deleteBook = function(req,res){
   })
 }
 
+methods.searchBook = function(req,res){
+  console.log('masuk controller', req.params.search);
+  Book.find({'title' : new RegExp(req.params.search, 'i')}, function(err, results){
+               if (err) {
+                 res.send(err)
+               }
+               else {
+                  res.send(results);
+               }
+  });
+}
 
 module.exports = methods
